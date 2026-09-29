@@ -3,57 +3,301 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Minecraft Forge Web Tester — One File</title>
-<meta name="description" content="One-file browser feasibility tester for Minecraft Java 1.20.1 + Forge 47.4.23 + Java 17.">
+<title>Minecraft Forge Web Tester — Actual Launch Probe</title>
+<meta name="description" content="Experimental browser-side launcher probe for Minecraft Java 1.20.1 + Forge 47.4.23 using CheerpJ 4.3 and LWJGL native shims.">
 <style>
-:root{color-scheme:dark;--bg:#0a1020;--panel:#121b2d;--panel2:#0c1423;--border:#2a3a58;--text:#eef4ff;--muted:#9eacc2;--accent:#69d1ff;--good:#70e18c;--warn:#f5cd70;--bad:#ff7e7e}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#07101d,#0a1020 55%,#070d17);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{width:min(1320px,96vw);margin:auto;padding:24px 0 44px}.hero{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.15em;margin:0 0 7px}.title{font-size:32px;font-weight:800;margin:0}.sub{color:var(--muted);margin:8px 0 0}.badge{padding:9px 12px;border:1px solid var(--border);background:var(--panel);border-radius:999px;color:var(--warn);font-size:12px;white-space:nowrap}.panel{margin-top:14px;padding:16px;border:1px solid var(--border);border-radius:14px;background:rgba(18,27,45,.92)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.field{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:11px}.field label,.field span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.field strong{font-size:19px}.upload{margin-top:13px}.upload input{width:100%;padding:11px;border:1px dashed #48617e;border-radius:10px;background:#09111f;color:var(--text)}.hint{color:var(--muted);font-size:11px;margin-top:6px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}button{border:1px solid var(--border);border-radius:10px;background:#17243a;color:var(--text);padding:10px 14px;cursor:pointer}button:hover{filter:brightness(1.1)}button:disabled{cursor:not-allowed;opacity:.45}.primary{border-color:#2c7394;background:#16374a}.selected{margin-top:11px;color:var(--muted);font-size:13px;word-break:break-word}.notice{margin-top:11px;padding:11px 13px;border-radius:10px;border:1px solid #5d4d27;background:#2b2413;color:#f6e2a7;font-size:12px;line-height:1.55}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.head h2{font-size:16px;margin:0}.head span{font-size:11px;color:var(--muted)}.canvas{position:relative;min-height:62vh;border:1px solid #1b2a40;border-radius:12px;overflow:hidden;background:#020509;display:grid;place-items:center}.canvas canvas{width:100%;height:auto;max-height:72vh;display:block;background:#020509;outline:none}.placeholder{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;background:radial-gradient(circle at center,rgba(31,62,84,.22),rgba(2,5,9,.9) 63%)}.placeholder .icon{font-size:42px;color:var(--accent)}.placeholder h3{margin:10px 0 6px}.placeholder p{max-width:700px;color:var(--muted);line-height:1.55;margin:0}.console{margin:0;min-height:230px;max-height:390px;overflow:auto;padding:13px;border-radius:10px;background:#050911;border:1px solid #19263b;color:#cfe6ff;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}.matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.check{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--panel2)}.check-title{font-size:12px}.check-detail{font-size:10px;color:var(--muted);margin-top:3px}.state{font-size:11px;white-space:nowrap}.ok{color:var(--good)}.ng{color:var(--bad)}footer{font-size:11px;color:var(--muted);line-height:1.5;margin-top:14px}@media(max-width:820px){.hero{flex-direction:column}.grid,.matrix{grid-template-columns:1fr}.canvas{min-height:47vh}.title{font-size:27px}}
+:root{color-scheme:dark;--bg:#07101c;--panel:#101a2a;--panel2:#0a1321;--border:#263b58;--text:#edf5ff;--muted:#9cacbf;--accent:#69d4ff;--good:#71df92;--warn:#f2ca6e;--bad:#ff7f7f}*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(180deg,#06101b,#08111e 58%,#050b14);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{min-height:100vh}.wrap{width:min(1400px,96vw);margin:auto;padding:20px 0 42px}.hero{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.17em;color:var(--accent);margin:0 0 7px}.title{font-size:30px;line-height:1.1;margin:0}.sub{color:var(--muted);margin:7px 0 0}.badge{padding:8px 11px;border:1px solid var(--border);border-radius:999px;background:var(--panel);color:var(--warn);font-size:12px}.panel{margin-top:12px;padding:15px;border:1px solid var(--border);border-radius:13px;background:rgba(16,26,42,.94)}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.field{padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--panel2)}.field .k{font-size:11px;color:var(--muted);margin-bottom:4px}.field .v{font-size:18px;font-weight:800}.inputrow{margin-top:10px}.inputrow label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.inputrow small{display:block;color:var(--muted);font-size:10px;margin-top:5px;line-height:1.45}.inputrow input{width:100%;padding:10px;border:1px dashed #4b6484;border-radius:10px;background:#08111e;color:var(--text)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}button{border:1px solid var(--border);border-radius:10px;background:#17263e;color:var(--text);padding:10px 14px;cursor:pointer}button:hover{filter:brightness(1.1)}button:disabled{opacity:.5;cursor:not-allowed}.primary{background:#173b4f;border-color:#2f7d9e}.danger{background:#321d24;border-color:#6b3842}.selected{margin-top:10px;color:var(--muted);font-size:12px;word-break:break-word}.notice{margin-top:10px;padding:10px 12px;border-radius:10px;background:#2b2413;border:1px solid #5b4c2a;color:#f5e1a1;font-size:11px;line-height:1.55}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}.head h2{font-size:15px;margin:0}.head span{font-size:11px;color:var(--muted)}.canvasbox{position:relative;min-height:58vh;background:#02060a;border:1px solid #1d2c41;border-radius:11px;overflow:hidden;display:grid;place-items:center}.canvasbox canvas{width:100%;height:auto;display:block;outline:none;background:#02060a}.placeholder{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;background:radial-gradient(circle at center,rgba(46,87,112,.22),rgba(2,6,10,.92) 67%)}.placeholder .logo{font-size:40px;color:var(--accent)}.placeholder h3{margin:8px 0 5px}.placeholder p{max-width:780px;color:var(--muted);line-height:1.55;margin:0;font-size:12px}.console{min-height:240px;max-height:440px;overflow:auto;padding:12px;border:1px solid #1a2940;border-radius:10px;background:#040910;color:#d5e9ff;font:12px/1.56 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}.matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.check{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px;border:1px solid var(--border);border-radius:9px;background:var(--panel2)}.check .title2{font-size:11px}.check .detail{font-size:10px;color:var(--muted);margin-top:2px}.state{font-size:11px;white-space:nowrap}.ok{color:var(--good)}.ng{color:var(--bad)}.warn{color:var(--warn)}footer{margin-top:12px;color:var(--muted);font-size:10px;line-height:1.5}@media(max-width:900px){.hero{flex-direction:column}.grid3,.grid2,.matrix{grid-template-columns:1fr}.canvasbox{min-height:46vh}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="hero"><div><p class="eyebrow">WEBASSEMBLY / CHEERPJ / FORGE</p><h1 class="title">Minecraft Forge Web Tester</h1><p class="sub">Minecraft Java 1.20.1 · Forge 47.4.23 · Java 17</p></div><div id="status" class="badge">検証モード</div></header>
+<header class="hero"><div><p class="eyebrow">CHEERPJ 4.3 / JAVA 17 / FORGE PROBE</p><h1 class="title">Minecraft Forge Web Tester</h1><p class="sub">Minecraft Java 1.20.1 · Forge 47.4.23 · experimental real-launch path</p></div><div id="status" class="badge">待機中</div></header>
 <section class="panel">
-<div class="grid"><div class="field"><span>Minecraft</span><strong>1.20.1</strong></div><div class="field"><span>Forge</span><strong>47.4.23</strong></div><div class="field"><span>Java</span><strong>17</strong></div></div>
-<div class="field upload"><label for="mod">Forge MOD JAR</label><input id="mod" type="file" accept=".jar,application/java-archive,application/zip"><div class="hint">選択したJARはサーバーへアップロードせず、このブラウザのIndexedDBだけに保存します。</div></div>
-<div class="actions"><button id="check" class="primary">起動チェック</button><button id="clear">保存JARを削除</button><button id="refresh">環境を再チェック</button><button id="copy">ログをコピー</button></div>
-<div id="selected" class="selected">選択: なし</div>
-<div class="notice"><b>重要:</b> このページは「本物のMinecraft 1.20.1 + Forge 47.4.23」が現行CheerpJ/LWJGL経路で実行できると仮定しません。チェックで確認できた範囲だけを表示し、未実証なら明示的に停止します。</div>
+  <div class="grid3">
+    <div class="field"><div class="k">Minecraft</div><div class="v">1.20.1</div></div>
+    <div class="field"><div class="k">Forge</div><div class="v">47.4.23</div></div>
+    <div class="field"><div class="k">CheerpJ</div><div class="v">4.3 / Java 17</div></div>
+  </div>
+  <div class="grid2">
+    <div class="inputrow"><label for="mod">① MOD JAR</label><input id="mod" type="file" accept=".jar,application/java-archive,application/zip"><small>ユーザーMOD。IndexedDBへ保存し、起動時にはCheerpJの/str領域へ渡します。</small></div>
+    <div class="inputrow"><label for="client">② Minecraft 1.20.1 client.jar</label><input id="client" type="file" accept=".jar,application/java-archive"><small>合法的に取得したMinecraft 1.20.1クライアントJARを指定してください。このページには同梱していません。</small></div>
+    <div class="inputrow"><label for="forge">③ Forge 1.20.1-47.4.23 universal.jar</label><input id="forge" type="file" accept=".jar,application/java-archive"><small>Forge公式配布物のuniversal JAR。インストーラJARではなくuniversal JARを推奨します。</small></div>
+    <div class="inputrow"><label for="libs">④ libraries フォルダ（任意・複数ファイル）</label><input id="libs" type="file" webkitdirectory directory multiple><small>.minecraft/libraries を選択すると、含まれるJARをクラスパス候補へ追加します。</small></div>
+    <div class="inputrow"><label for="gamefiles">⑤ .minecraft フォルダ全体（推奨）</label><input id="gamefiles" type="file" webkitdirectory directory multiple><small>assets / versions / libraries などを参照用として取り込みます。ブラウザのファイル選択でローカル内容だけを読み取ります。</small></div>
+    <div class="inputrow"><label for="natives">⑥ cheerpj-natives フォルダ（任意）</label><input id="natives" type="file" webkitdirectory directory multiple><small>公式cheerpj-nativesを用意した場合に指定できます。標準のlibrary pathは /app/cheerpj-natives/natives です。</small></div>
+  </div>
+  <div class="actions"><button id="check" class="primary">環境チェック</button><button id="launch">実際にForge起動を試す</button><button id="clear" class="danger">保存MODを削除</button><button id="copy">ログをコピー</button></div>
+  <div id="selected" class="selected">MOD: なし</div>
+  <div id="launchHint" class="notice"><b>実起動試行：</b>このボタンはBLOCKEDで即停止せず、必要ファイルが揃っていればCheerpJの <code>cheerpjRunMain("cpw.mods.bootstraplauncher.BootstrapLauncher", ...)</code> を実際に呼び出します。失敗した箇所をそのままConsoleへ残します。</div>
 </section>
-<section class="panel"><div class="head"><h2>Minecraft 3D Canvas</h2><span id="canvasStatus">未起動</span></div><div class="canvas"><canvas id="mcCanvas" width="1280" height="720" tabindex="0"></canvas><div id="placeholder" class="placeholder"><div class="icon">◆</div><h3>実Minecraftクライアント未接続</h3><p>ここには本物のMinecraft Javaクライアントのみを接続します。Three.js等の代替3Dは使用しません。</p></div></div></section>
-<section class="panel"><div class="head"><h2>Console</h2></div><pre id="console" class="console"></pre></section>
+<section class="panel"><div class="head"><h2>Minecraft 3D Canvas</h2><span id="canvasStatus">未起動</span></div><div class="canvasbox"><canvas id="mcCanvas" width="1280" height="720" tabindex="0"></canvas><div id="placeholder" class="placeholder"><div class="logo">◆</div><h3>実Minecraftクライアント接続待ち</h3><p>Three.js等の代替3D画面は使用しません。LWJGLの実起動に成功した場合のみ、このCanvasが実描画先になります。</p></div></div></section>
+<section class="panel"><div class="head"><h2>Console</h2><span id="lineCount">0 lines</span></div><pre id="console" class="console"></pre></section>
 <section class="panel"><div class="head"><h2>ブラウザ側チェック</h2></div><div id="matrix" class="matrix"></div></section>
-<footer>Mojang/Microsoft公式製品ではありません。Minecraft本体、Forge、アセット、ライブラリはこのHTMLに同梱していません。CheerpJは外部ローダーURLから読み込まれます。</footer>
+<footer>このページはMojang/Microsoft/Forgeとは無関係の第三者ツールです。Minecraft本体・Forge・アセット・ライブラリをリポジトリに同梱しません。CheerpJ runtimeは公式CDNから読み込みます。実起動経路は実験的で、未対応部分があればその例外/ログを記録します。</footer>
 </div>
 <script>
 (()=>{
 'use strict';
-const TARGET={minecraft:'1.20.1',forge:'47.4.23',java:'17',lwjgl:'3.3.1'};
+const TARGET={minecraft:'1.20.1',forge:'47.4.23',java:'17',lwjgl:'3.3.1',mcp:'20230612.114412'};
 const CHEERPJ='https://cjrtnc.leaningtech.com/4.3/loader.js';
-const DB_NAME='forge-web-tester-one-file';const STORE='mods';
-const MAX=512*1024*1024;
+const DB_NAME='forge-web-tester-one-file';
+const STORE='mods';
+const MAX_MOD=512*1024*1024;
+const MAX_TOTAL_STAGE=1536*1024*1024;
 const $=id=>document.getElementById(id);
-const lines=[];let cheerpjPromise=null;
-function log(level,msg,detail=''){const t=new Date().toLocaleTimeString();lines.push(`[${level}] ${t} ${msg}${detail?' '+detail:''}`);if(lines.length>1200)lines.shift();const el=$('console');el.textContent=lines.join('\n');el.scrollTop=el.scrollHeight}
-function formatBytes(n){if(!Number.isFinite(n))return '-';if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(1)+' KiB';return (n/1048576).toFixed(1)+' MiB'}
-function inspect(){const c=$('mcCanvas');let g1=null,g2=null;try{g2=c.getContext('webgl2')}catch{}try{g1=c.getContext('webgl')||c.getContext('experimental-webgl')}catch{}return{secureContext:!!window.isSecureContext,indexedDB:'indexedDB'in window,opfs:!!navigator.storage?.getDirectory,webAssembly:typeof WebAssembly!=='undefined',sharedArrayBuffer:typeof SharedArrayBuffer!=='undefined',crossOriginIsolated:!!window.crossOriginIsolated,webgl2:!!g2,webgl:!!g1,hardwareConcurrency:navigator.hardwareConcurrency||0}};
-function renderCheck(v){const items=[['Secure Context',v.secureContext,'GitHub Pages/HTTPS'],['IndexedDB',v.indexedDB,'MOD JAR保存'],['OPFS',v.opfs,'大容量FS候補'],['WebAssembly',v.webAssembly,'CheerpJ基盤'],['SharedArrayBuffer',v.sharedArrayBuffer,'SAB API'],['Cross-Origin Isolated',v.crossOriginIsolated,'COOP/COEP等の分離状態'],['WebGL2',v.webgl2,'GPU API'],['WebGL',v.webgl,'GPU API fallback']];$('matrix').innerHTML=items.map(x=>`<div class="check"><div><div class="check-title">${x[0]}</div><div class="check-detail">${x[2]}</div></div><div class="state ${x[1]?'ok':'ng'}">${x[1]?'OK':'NG'}</div></div>`).join('')}
-function openDb(){return new Promise((resolve,reject)=>{if(!('indexedDB'in window))return reject(new Error('IndexedDBが利用できません。'));const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE))r.result.createObjectStore(STORE,{keyPath:'id'})};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error||new Error('IndexedDBを開けませんでした'))})}
-async function digest(file){const b=await file.arrayBuffer();const h=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-async function saveMod(file){if(!file)throw new Error('ファイルが選択されていません。');if(!file.name.toLowerCase().endsWith('.jar'))throw new Error('.jarファイルを選択してください。');if(file.size>MAX)throw new Error('JARサイズが512 MiBを超えています。');const head=new Uint8Array(await file.slice(0,4).arrayBuffer());if(head.length!==4||head[0]!==0x50||head[1]!==0x4b)throw new Error('JARとして認識できません（ZIPヘッダなし）。');const record={id:'active',name:file.name,size:file.size,type:file.type,sha256:await digest(file),bytes:await file.arrayBuffer(),updatedAt:Date.now()};const db=await openDb();await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(record);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||new Error('保存に失敗しました'))});db.close();return record}
-async function getMod(){const db=await openDb();const record=await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly');const r=tx.objectStore(STORE).get('active');r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error)});db.close();return record}
-async function clearMod(){const db=await openDb();await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete('active');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});db.close()}
-function showSelected(r){$('selected').textContent=r?`選択: ${r.name} · ${formatBytes(r.size)} · SHA-256 ${r.sha256}`:'選択: なし'}
-function loadCheerpJ(){if(window.cheerpjInit)return Promise.resolve();if(cheerpjPromise)return cheerpjPromise;cheerpjPromise=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=CHEERPJ;s.async=true;s.onload=()=>resolve();s.onerror=()=>reject(new Error('CheerpJ 4.3 loaderを読み込めませんでした。ネットワーク/CORS/Content Security Policyを確認してください。'));document.head.appendChild(s)});return cheerpjPromise}
-async function initCheerpJ(){await loadCheerpJ();if(typeof window.cheerpjInit!=='function')throw new Error('cheerpjInitが見つかりません。');await window.cheerpjInit();if(typeof window.cheerpjCreateDisplay==='function'){try{window.cheerpjCreateDisplay(1280,720)}catch(e){log('WARN','cheerpjCreateDisplay呼び出し失敗',String(e))}}log('INFO','CheerpJ 4.3 runtime initialized')}
-function blocker(){return['公開CheerpJ資料ではJava 17は対応していますが、Minecraft 1.20.1 + Forge 47.4.23の完全な実動経路は確認できません。','Minecraft 1.20.1側のLWJGL 3.3.1に対して、公開cheerpj-nativesはLWJGLの部分実装です。','公式Browsercraftの公開実例はMinecraft 1.2.5です。','したがって本物のForgeクライアント起動を装って3D画面を生成することはせず、ここで検証を停止します。']}
-async function launchCheck(){const btn=$('check');btn.disabled=true;$('status').textContent='PoC試行中';$('canvasStatus').textContent='CheerpJ確認中';try{const v=inspect();renderCheck(v);log('INFO',`Target Minecraft ${TARGET.minecraft} / Forge ${TARGET.forge} / Java ${TARGET.java} / LWJGL ${TARGET.lwjgl}`);log('INFO',`Environment: WebAssembly=${v.webAssembly}, WebGL2=${v.webgl2}, IndexedDB=${v.indexedDB}, SAB=${v.sharedArrayBuffer}, crossOriginIsolated=${v.crossOriginIsolated}`);await initCheerpJ();for(const x of blocker())log('BLOCKED',x);$('status').textContent='未検証';$('canvasStatus').textContent='未起動';$('placeholder').hidden=false}catch(e){$('status').textContent='エラー';$('canvasStatus').textContent='未起動';$('placeholder').hidden=false;log('ERROR',e.message||String(e))}finally{btn.disabled=false}}
-$('mod').addEventListener('change',async()=>{try{const r=await saveMod($('mod').files?.[0]);showSelected(r);log('INFO','MOD JARをIndexedDBに保存しました。',r.name);log('INFO','SHA-256',r.sha256)}catch(e){showSelected(null);log('ERROR','MOD JAR保存失敗',e.message||String(e))}});
-$('clear').addEventListener('click',async()=>{try{await clearMod();$('mod').value='';showSelected(null);log('INFO','保存済みMOD JARを削除しました。')}catch(e){log('ERROR','削除失敗',e.message||String(e))}});
-$('refresh').addEventListener('click',()=>{const v=inspect();renderCheck(v);log('INFO','ブラウザ環境を再チェックしました。')});
-$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(lines.join('\n'));log('INFO','ログをコピーしました。')}catch(e){log('ERROR','クリップボードへのコピーに失敗',e.message||String(e))}});
-$('check').addEventListener('click',launchCheck);
-window.addEventListener('error',e=>log('ERROR',e.message||'window error',e.filename?`(${e.filename}:${e.lineno})`:''));window.addEventListener('unhandledrejection',e=>log('ERROR','Unhandled promise rejection',String(e.reason)));
-(async()=>{log('INFO','One-file Forge Web Tester started');const v=inspect();renderCheck(v);log('INFO',`Target ${TARGET.minecraft} / Forge ${TARGET.forge} / Java ${TARGET.java} / LWJGL ${TARGET.lwjgl}`);try{showSelected(await getMod())}catch(e){log('WARN','保存JARの読み込みに失敗しました',e.message||String(e))}})();
+const lines=[];
+let cheerpjReady=false;
+let launchStarted=false;
+
+function log(level,msg,detail=''){
+  const t=new Date().toLocaleTimeString();
+  lines.push(`[${level}] ${t} ${msg}${detail?' '+detail:''}`);
+  while(lines.length>1600)lines.shift();
+  $('console').textContent=lines.join('\n');
+  $('console').scrollTop=$('console').scrollHeight;
+  $('lineCount').textContent=`${lines.length} lines`;
+}
+function bytes(n){if(!Number.isFinite(n))return '-';if(n<1024)return `${n} B`;if(n<1048576)return `${(n/1024).toFixed(1)} KiB`;return `${(n/1048576).toFixed(1)} MiB`}
+function env(){
+  const c=$('mcCanvas');
+  let gl2=false,gl1=false;
+  try{gl2=!!c.getContext('webgl2')}catch{}
+  try{gl1=!!(c.getContext('webgl')||c.getContext('experimental-webgl'))}catch{}
+  return {
+    secureContext:!!window.isSecureContext,
+    indexedDB:'indexedDB'in window,
+    opfs:!!navigator.storage?.getDirectory,
+    wasm:typeof WebAssembly!=='undefined',
+    sab:typeof SharedArrayBuffer!=='undefined',
+    coi:!!window.crossOriginIsolated,
+    webgl2:gl2,webgl:gl1,
+    ua:navigator.userAgent,
+    hw:navigator.hardwareConcurrency||0
+  };
+}
+function drawEnv(v){
+  const a=[
+    ['HTTPS / secure context',v.secureContext,'GitHub Pages / localhost'],
+    ['IndexedDB',v.indexedDB,'MOD persistence'],
+    ['OPFS',v.opfs,'persistent filesystem candidate'],
+    ['WebAssembly',v.wasm,'CheerpJ runtime'],
+    ['SharedArrayBuffer',v.sab,'available API'],
+    ['crossOriginIsolated',v.coi,'COOP/COEP isolation'],
+    ['WebGL2',v.webgl2,'GPU rendering API'],
+    ['WebGL',v.webgl,'GPU fallback']
+  ];
+  $('matrix').innerHTML=a.map(([n,ok,d])=>`<div class="check"><div><div class="title2">${n}</div><div class="detail">${d}</div></div><div class="state ${ok?'ok':'ng'}">${ok?'OK':'NG'}</div></div>`).join('');
+}
+function validateJar(file){
+  if(!file)throw new Error('ファイルが選択されていません。');
+  if(!file.name.toLowerCase().endsWith('.jar'))throw new Error(`${file.name}: .jarを指定してください。`);
+  if(file.size===0)throw new Error(`${file.name}: 空ファイルです。`);
+}
+function dbOpen(){
+  return new Promise((resolve,reject)=>{
+    if(!('indexedDB'in window))return reject(new Error('IndexedDBが利用できません。'));
+    const r=indexedDB.open(DB_NAME,1);
+    r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE))r.result.createObjectStore(STORE,{keyPath:'id'})};
+    r.onsuccess=()=>resolve(r.result);
+    r.onerror=()=>reject(r.error||new Error('IndexedDB open failed'));
+  });
+}
+async function sha256(file){
+  const h=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
+  return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function saveMod(file){
+  validateJar(file);
+  if(file.size>MAX_MOD)throw new Error(`MODが${bytes(MAX_MOD)}を超えています。`);
+  const head=new Uint8Array(await file.slice(0,4).arrayBuffer());
+  if(head.length!==4||head[0]!==0x50||head[1]!==0x4b)throw new Error('ZIP/JARヘッダが確認できません。');
+  const r={id:'active',name:file.name,size:file.size,sha256:await sha256(file),bytes:await file.arrayBuffer(),updatedAt:Date.now()};
+  const db=await dbOpen();
+  await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(r);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||new Error('保存失敗'))});
+  db.close();
+  return r;
+}
+async function getMod(){
+  const db=await dbOpen();
+  const r=await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly');const q=tx.objectStore(STORE).get('active');q.onsuccess=()=>resolve(q.result||null);q.onerror=()=>reject(q.error)});
+  db.close();return r;
+}
+async function deleteMod(){
+  const db=await dbOpen();
+  await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete('active');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
+  db.close();
+}
+function showMod(r){$('selected').textContent=r?`MOD: ${r.name} · ${bytes(r.size)} · SHA-256 ${r.sha256}`:'MOD: なし'}
+function asRelative(file){
+  const p=file.webkitRelativePath||file.name;
+  const parts=p.split('/');
+  return parts.length>1?parts.slice(1).join('/'):parts[0];
+}
+function collectFiles(input,accept){
+  return [...(input?.files||[])].filter(f=>accept(f));
+}
+function isJar(f){return f.name.toLowerCase().endsWith('.jar')}
+function isNativeJs(f){return /\.(js|wasm|json)$/i.test(f.name)}
+async function loadCheerpJ(options){
+  if(!window.cheerpjInit){
+    await new Promise((resolve,reject)=>{
+      const s=document.createElement('script');s.src=CHEERPJ;s.async=true;
+      s.onload=resolve;s.onerror=()=>reject(new Error('CheerpJ 4.3 loaderを読み込めませんでした。'));
+      document.head.appendChild(s);
+    });
+  }
+  if(typeof window.cheerpjInit!=='function')throw new Error('cheerpjInitが存在しません。');
+  await window.cheerpjInit(options||{});
+  cheerpjReady=true;
+  log('INFO','CheerpJ 4.3 runtime initialized');
+}
+async function addBinary(path,buffer){
+  if(typeof window.cheerpjAddStringFile!=='function')throw new Error('cheerpjAddStringFileが利用できません。');
+  window.cheerpjAddStringFile(path,new Uint8Array(buffer));
+}
+async function stageOne(path,file){if(file instanceof ArrayBuffer){await addBinary(path,file)}else{await addBinary(path,await file.arrayBuffer())}}
+async function stageAllFiles(files,root,maxBytes){
+  let total=0;let count=0;
+  for(const f of files){
+    if(total+f.size>maxBytes)throw new Error(`ステージ容量上限 ${bytes(maxBytes)} を超えます。`);
+    const rel=asRelative(f).replace(/\\/g,'/').replace(/^\/+/, '');
+    const safe=rel.split('/').map(x=>x.replace(/[^A-Za-z0-9._-]/g,'_')).join('/');
+    await stageOne(`${root}/${safe}`,f);
+    total+=f.size;count++;
+    if(count%25===0)log('INFO',`staging ${count} files`,bytes(total));
+  }
+  return {count,total};
+}
+function findMinecraftClient(){
+  const f=$('client').files?.[0];
+  return f||null;
+}
+function findForge(){return $('forge').files?.[0]||null}
+function selectedLibs(){
+  const a=collectFiles($('libs'),isJar);
+  const b=collectFiles($('gamefiles'),isJar);
+  const seen=new Set();const out=[];
+  for(const f of [...a,...b]){const key=f.name+'|'+f.size; if(!seen.has(key)){seen.add(key);out.push(f)}}
+  return out;
+}
+function launchArgs(){
+  const uuid='00000000-0000-0000-0000-000000000001';
+  return [
+    '--launchTarget','forgeclient',
+    '--fml.forgeVersion',TARGET.forge,
+    '--fml.mcVersion',TARGET.minecraft,
+    '--fml.forgeGroup','net.minecraftforge',
+    '--fml.mcpVersion',TARGET.mcp,
+    '--gameDir','/str/game',
+    '--assetsDir','/str/game/assets',
+    '--assetIndex','1.20',
+    '--username','WebTester',
+    '--uuid',uuid,
+    '--accessToken','0',
+    '--userType','legacy',
+    '--version',TARGET.minecraft,
+    '--versionType','release',
+    '--width','1280',
+    '--height','720'
+  ];
+}
+async function runRealLaunch(){
+  if(launchStarted)return;
+  launchStarted=true;
+  $('launch').disabled=true;$('check').disabled=true;
+  $('status').textContent='実起動試行中';$('canvasStatus').textContent='Forge起動試行中';$('placeholder').hidden=false;
+  try{
+    const c=findMinecraftClient(),f=findForge(),mod=await getMod(),libs=selectedLibs();
+    if(!c)throw new Error('Minecraft client.jar が未指定です。');
+    if(!f)throw new Error('Forge universal.jar が未指定です。');
+    if(!mod)throw new Error('MOD JARが未指定です。まずMODを選択してください。');
+    validateJar(c);validateJar(f);
+    const total=c.size+f.size+mod.size+libs.reduce((s,x)=>s+x.size,0);
+    log('INFO',`Real launch probe: MC=${c.name} Forge=${f.name} MOD=${mod.name} libraries=${libs.length}`);
+    log('INFO','Stage size',bytes(total));
+    if(total>MAX_TOTAL_STAGE)throw new Error(`ステージ容量が${bytes(MAX_TOTAL_STAGE)}を超えます。`);
+
+    const v=env();drawEnv(v);
+    log('INFO',`Environment: WebAssembly=${v.wasm}, WebGL2=${v.webgl2}, IndexedDB=${v.indexedDB}, SAB=${v.sab}, crossOriginIsolated=${v.coi}`);
+    if(!v.wasm)throw new Error('WebAssemblyが利用できません。');
+    if(!v.webgl)throw new Error('WebGLが利用できません。');
+    if(!v.secureContext)log('WARN','secure contextではありません。CheerpJはHTTPサーバー経由で実行してください。');
+    if(!v.coi)log('WARN','crossOriginIsolated=false。SAB依存箇所で失敗する可能性があります。これは今回の実起動試行では即BLOCKしません。');
+
+    $('canvasStatus').textContent='CheerpJ初期化中';
+    const nativeAll=collectFiles($('natives'),()=>true);
+    const nativesPicked=nativeAll.filter(f=>/(^|[\\/])natives[\\/]/.test(f.webkitRelativePath||''));
+    const gamefiles=collectFiles($('gamefiles'),()=>true);
+    const nonJarGamefiles=gamefiles.filter(f=>!isJar(f));
+    const javaProps=['user.dir=/str/game','java.library.path=/app/cheerpj-natives/natives:/str/cheerpj-natives/natives'];
+    await loadCheerpJ({javaProperties:javaProps});
+    if(typeof window.cheerpjCreateDisplay==='function'){
+      try{window.cheerpjCreateDisplay(1280,720)}catch(e){log('WARN','cheerpjCreateDisplay',String(e))}
+    }
+    window.lwjglCanvasElement=$('mcCanvas');
+    log('INFO','window.lwjglCanvasElement = #mcCanvas');
+
+    await stageOne('/str/game/client-1.20.1.jar',c);
+    await stageOne('/str/game/forge-1.20.1-47.4.23-universal.jar',f);
+    await stageOne('/str/game/mods/'+mod.name,mod.bytes);
+    if(nonJarGamefiles.length){
+      const gr=await stageAllFiles(nonJarGamefiles,'/str/game',1024*1024*1024);
+      log('INFO','Minecraft data staged',`${gr.count} files / ${bytes(gr.total)}`);
+    }
+    if(nativesPicked.length){
+      const nr=await stageAllFiles(nativeAll,'/str/cheerpj-natives',256*1024*1024);
+      log('INFO','cheerpj-natives staged',`${nr.count} files / ${bytes(nr.total)}`);
+    }
+    let idx=0;const cp=['/str/game/client-1.20.1.jar','/str/game/forge-1.20.1-47.4.23-universal.jar'];
+    for(const lib of libs){const p=`/str/game/lib/${String(idx++).padStart(4,'0')}-${lib.name.replace(/[^A-Za-z0-9._-]/g,'_')}`;await stageOne(p,lib);cp.push(p)}
+    log('INFO','Classpath entries staged',String(cp.length));
+    if(nativesPicked.length)log('INFO',`cheerpj-nativesを/strへステージしました。java.library.pathは/appと/strの両方を探索します。`);
+
+    const main='cpw.mods.bootstraplauncher.BootstrapLauncher';
+    const args=launchArgs();
+    log('INFO',`Calling ${main}`);
+    log('INFO','Launch args',args.join(' '));
+    log('INFO','Classpath',cp.join(':'));
+    if(typeof window.cheerpjRunMain!=='function')throw new Error('cheerpjRunMainが利用できません。');
+    const p=window.cheerpjRunMain(main,cp.join(':'),...args);
+    if(p&&typeof p.then==='function'){
+      p.then(v=>log('INFO','cheerpjRunMain resolved',String(v))).catch(e=>log('ERROR','cheerpjRunMain rejected',String(e&&e.stack||e)));
+    }
+    log('INFO','BootstrapLauncherへ制御を渡しました。Java側のログはブラウザConsoleにも出る可能性があります。');
+    $('canvasStatus').textContent='起動処理中';$('placeholder').hidden=false;
+  }catch(e){
+    $('status').textContent='実起動エラー';$('canvasStatus').textContent='起動失敗';
+    log('ERROR',e&&e.stack?e.stack:(e?.message||String(e)));
+  }finally{
+    $('check').disabled=false;
+  }
+}
+async function check(){
+  const b=$('check');b.disabled=true;$('status').textContent='環境確認中';
+  try{
+    const v=env();drawEnv(v);
+    log('INFO',`Target Minecraft ${TARGET.minecraft} / Forge ${TARGET.forge} / Java ${TARGET.java} / LWJGL ${TARGET.lwjgl}`);
+    log('INFO',`Environment: WebAssembly=${v.wasm}, WebGL2=${v.webgl2}, IndexedDB=${v.indexedDB}, SAB=${v.sab}, crossOriginIsolated=${v.coi}`);
+    await loadCheerpJ({javaProperties:['user.dir=/str/game','java.library.path=/app/cheerpj-natives/natives:/str/cheerpj-natives/natives']});
+    if(typeof window.cheerpjCreateDisplay==='function'){
+      try{window.cheerpjCreateDisplay(1280,720);window.lwjglCanvasElement=$('mcCanvas');log('INFO','LWJGL canvas hook prepared')}catch(e){log('WARN','Canvas準備失敗',String(e))}
+    }
+    $('status').textContent='チェック完了';
+    log('INFO','環境チェック完了。未検証部分は実起動ボタンから試行できます。');
+  }catch(e){$('status').textContent='チェックエラー';log('ERROR',e?.message||String(e))}
+  finally{b.disabled=false}
+}
+$('mod').addEventListener('change',async()=>{
+  try{const r=await saveMod($('mod').files?.[0]);showMod(r);log('INFO','MOD JARをIndexedDBに保存しました。',r.name);log('INFO','SHA-256',r.sha256)}
+  catch(e){log('ERROR','MOD保存失敗',e?.message||String(e));}
+});
+$('check').addEventListener('click',check);
+$('launch').addEventListener('click',runRealLaunch);
+$('clear').addEventListener('click',async()=>{try{await deleteMod();$('mod').value='';showMod(null);log('INFO','保存MODを削除しました。')}catch(e){log('ERROR','削除失敗',e?.message||String(e))}});
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(lines.join('\n'));log('INFO','ログをクリップボードへコピーしました。')}catch(e){log('ERROR','コピー失敗',e?.message||String(e))}});
+window.addEventListener('error',e=>log('ERROR',e.message||'window error',e.filename?`${e.filename}:${e.lineno}`:''));
+window.addEventListener('unhandledrejection',e=>log('ERROR','Unhandled promise rejection',String(e.reason)));
+(async()=>{log('INFO','Actual Launch Probe started');const v=env();drawEnv(v);try{showMod(await getMod())}catch(e){log('WARN','保存MODの読み込み失敗',e?.message||String(e))}})();
 })();
 </script>
 </body>
